@@ -40,3 +40,29 @@
 .read-the-docs {
   color: #888;
 }
+
+/* App.css */
+.app-container {
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh; /* Full-screen height for each section */
+}
+
+section {
+  scroll-snap-align: start;
+  height: 100vh; /* Each section takes the full viewport height */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-section {
+  background-color: #f0f8ff; /* Example background color */
+  text-align: center;
+}
+
+.portfolio-section {
+  background-color: #f9f9f9; /* Different background for distinction */
+  text-align: center;
+}
