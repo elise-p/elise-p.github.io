@@ -1,21 +1,18 @@
+html, body {
+  scroll-snap-type: y mandatory;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  scroll-behavior: smooth;
+  overflow: auto; /* Allow scrolling */
+}
+
 #root {
-  max-width: 1280px;
+  width: 100vw;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
-}
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
 @keyframes logo-spin {
@@ -44,18 +41,22 @@
 /* App.css */
 .app-container {
   scroll-snap-type: y mandatory;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height: 100vh; /* Full-screen height for each section */
+  width: auto;
 }
 
 section {
   scroll-snap-align: start;
-  height: 100vh; /* Each section takes the full viewport height */
+  height: 100vh;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  transition: transform 0.8s ease-in-out; /* Slows down the snapping */
 }
+
 
 .home-section {
   background-color: #f0f8ff; /* Example background color */

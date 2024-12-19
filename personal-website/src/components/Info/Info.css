@@ -1,0 +1,10 @@
+.info-container {
+    text-align: center;
+  }
+  
+  .circular-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  

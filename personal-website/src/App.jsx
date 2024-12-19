@@ -5,16 +5,14 @@ import './App.css';
 import myImage from "./assets/me(4).jpg";
 import Navbar from './components/Navbar/Navbar';
 import Portfolio from "./components/Portfolio/Portfolio";
+import Info from "./components/Info/Info";
 
 function App() {
   return (
     <div className="app-container">
       <section className="home-section">
         <div className="fade-in">
-          <img src={myImage} className="circular-image" alt="Elise Poniman" />
-          <h1>Elise Poniman</h1>
-          <p>Hi!</p>
-          <p>My name is Elise Poniman and I'm currently in my senior year majoring in Computer Science at the University of Washington.</p>
+          <Info />
           <Navbar />
         </div>
         
