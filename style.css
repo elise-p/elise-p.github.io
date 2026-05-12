@@ -1,66 +1,116 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-areas:
-        "photo photo name name name name"
-        "photo photo email email linkedin github"
-        "photo photo desc desc desc desc"
-        "photo photo resume resume resume resume";;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 16px;
-    align-items: center;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #222;
+    background-color: #fafafa;
 }
 
-.photo {
-  grid-area: photo;
+.about-me {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 48px 40px;
+}
+
+.profile-image {
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 25%;
+}
+
+.about-content {
+    flex: 1;
 }
 
 .name {
-  grid-area: name;
+    margin-bottom: 12px;
+}
+
+.links {
+    display: flex;
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.links span,
+.links a {
+    padding: 8px 12px;
+
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 999px;
+
+    font-size: 15px;
+    text-decoration: none;
+    color: #222;
+}
+
+.links a:hover {
+    border-color: #222;
+    background-color: #f2f2f2;
 }
 
 .desc {
-  grid-area: desc;
+    line-height: 1.6;
+
+    margin-bottom: 20px;
 }
 
-.github {
-  grid-area: github;
+.resume {
+    display: inline-block;
+
+    padding: 10px 16px;
+
+    border: 1px solid #222;
+    border-radius: 8px;
+
+    text-decoration: none;
+    color: #222;
 }
 
-.linkedin {
-  grid-area: linkedin;
+.resume:hover {
+    background-color: #222;
+    color: white;
 }
 
-.email {
-  grid-area: email;
-}
-
-
-
-.experience {
+.section {
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 40px;
 }
 
-.experience h2 {
+.section h2 {
     margin-bottom: 24px;
 }
 
-.experience-list {
+.card-list {
     display: flex;
     flex-direction: column;
     gap: 24px;
 }
 
-.experience-item {
+.card-item {
     display: block;
 
     padding: 24px;
 
-    border: 1px solid #ccc;
-    border-radius: 12px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 14px;
 
     text-decoration: none;
     color: inherit;
@@ -68,12 +118,12 @@
     transition: 0.2s ease;
 }
 
-.experience-item:hover {
+.card-item:hover {
     transform: translateY(-2px);
-    border-color: black;
+    border-color: #222;
 }
 
-.experience-top {
+.card-top {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -81,11 +131,11 @@
     margin-bottom: 12px;
 }
 
-.experience-top h3 {
+.card-top h3 {
     margin-bottom: 4px;
 }
 
-.experience-top h4 {
+.card-top h4 {
     color: gray;
     font-weight: normal;
 }
@@ -94,89 +144,13 @@
     font-size: 24px;
 }
 
-.experience-date {
+.card-date {
     color: gray;
     font-style: italic;
 
     margin-bottom: 16px;
 }
 
-.experience-desc {
+.card-desc {
     line-height: 1.6;
 }
-/* body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
-}
-
-nav {
-    background-color: #111;
-
-    padding: 15px 40px;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.nav-links a {
-    color: white;
-    text-decoration: none;
-
-    margin-left: 20px;
-
-    font-size: 16px;
-}
-
-.nav-links a:hover {
-    color: #999;
-}
-
-.main-content {
-    padding: 50px 40px;
-}
-
-.links a {
-    display: inline-block;
-
-    margin-right: 15px;
-
-    text-decoration: none;
-    color: blue;
-}
-
-.project-card {
-    background-color: white;
-
-    padding: 20px;
-    margin-top: 20px;
-
-    border-radius: 10px;
-
-    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.blog-link {
-    text-decoration: none;
-    color: inherit;
-}
-
-.blog-link .project-card {
-    transition: transform 0.2s ease,
-                box-shadow 0.2s ease;
-}
-
-.blog-link .project-card:hover {
-    transform: translateY(-4px);
-
-    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
-
-    cursor: pointer;
-} */
