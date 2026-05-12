@@ -1,4 +1,42 @@
-body {
+* {
+  box-sizing: border-box;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas:
+        "photo photo name name name name"
+        "photo photo email email linkedin github"
+        "photo photo desc desc desc desc";
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    align-items: center;
+}
+
+.photo {
+  grid-area: photo;
+}
+
+.name {
+  grid-area: name;
+}
+
+.desc {
+  grid-area: desc;
+}
+
+.github {
+  grid-area: github;
+}
+
+.linkedin {
+  grid-area: linkedin;
+}
+
+.email {
+  grid-area: email;
+}
+/* body {
     margin: 0;
     font-family: Arial, sans-serif;
     background-color: #f5f5f5;
@@ -73,4 +111,4 @@ nav {
     box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.15);
 
     cursor: pointer;
-}
+} */
