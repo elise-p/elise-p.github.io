@@ -7,7 +7,8 @@
     grid-template-areas:
         "photo photo name name name name"
         "photo photo email email linkedin github"
-        "photo photo desc desc desc desc";
+        "photo photo desc desc desc desc"
+        "photo photo resume resume resume resume";;
     grid-template-columns: repeat(6, 1fr);
     gap: 16px;
     align-items: center;
