@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendly Recommendation Algorithm</title>
+
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body>
+    <div class="main-content blog-page">
+        <a class="back-link" href="../index.html">← Back</a>
+
+        <div class="blog-image-placeholder">
+            Image placeholder: Friendly project presentation image
+        </div>
+
+        <p>
+            I was grateful to be able to present this project with my team in front of other students and engineers, as
+            shown in this Linkedin post!
+            <br>
+            <a href="https://www.linkedin.com/posts/elise-poniman_thrilled-to-share-a-project-my-team-and-i-ugcPost-7336882316528537600-tsot?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM"
+                target="_blank">
+                https://www.linkedin.com/posts/elise-poniman_thrilled-to-share-a-project-my-team-and-i-ugcPost-7336882316528537600-tsot?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM
+            </a>
+        </p>
+
+        <p>
+            Here is the GitHub Project for that
+            <br>
+            <a href="https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration" target="_blank">
+                https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration
+            </a>
+        </p>
+
+        <h2>Background of the Project</h2>
+
+        <p>
+            I decided to join Husky Coding Project Club at UW to improve my SWE skills. During that time, me and my team
+            decided to create a social media app for UW students to connect with each other based on their interests and
+            hobbies, so that new students are able to connect with each other easier.
+        </p>
+
+        <p>
+            On this project, I was responsible for the backend, specifically the API and the recommendation algorithm to
+            match users based on their interest. Initially, I decided to use a graph database, as we can use the edges to
+            find the users with overlapping interests. Therefore, I decided to explore multiple graph databases, such as
+            Neo4j and Amazon Neptune.
+        </p>
+
+        <p>
+            Slowly, I realized that it is not viable for us to use a graph database, because most of the software
+            requires you to pay a high amount of fee to be hosted and at that time, we didn’t have the budget to do so.
+            Therefore, I tried to find another way to tackle this problem, by finding a suitable algorithm. That’s when I
+            decided to use a mix of Jaccard Similarity and Min-Hashing + LSH
+        </p>
+
+        <h2>Jaccard Similarity and Min-Hashing + LSH</h2>
+
+        <p>
+            Jaccard Similarity is the equation of finding the overlapping of two sets and scoring between 0 and 1, which
+            is shown under this equation:
+        </p>
+
+        <div class="blog-formula">
+            J(A, B) = |A ∩ B| / |A ∪ B|
+        </div>
+
+        <p>
+            In this case, scoring of 0 means that there is no similarity, and scoring of 1 means that they are
+            identical. In this case, it is useful to find the similarity of interest based on this equation.
+        </p>
+
+        <p>
+            However, if I only use the Jaccard Similarity equation, then calculating each pair of interest between each
+            user is going to take O(n^2) time complexity. This is not feasible especially under a large number of users,
+            as we want to show the recommendation to the user quickly. This is where Min-Hashing comes in.
+        </p>
+
+        <p>
+            MinHashing is the technique to estimate similarity between sets and produce a hash value. The purpose in this
+            case is to group users based on the hash values through Locality-Sensitive Hashing (LSH). LSH will split the
+            hash value into bands, and the users landing in the same bucket will become candidate matches.
+        </p>
+
+        <h2>Implementation</h2>
+
+        <p>
+            In the database schema, I divided the interests section into interest and their categories, such that some
+            scoring is still given for interest under the same categories. (For example, basketball and swimming are
+            under sports category). Therefore, the algorithm above will be implemented for both the category and the
+            interest section.
+        </p>
+
+        <p>
+            First, I calculate the MinHashing value of the interest and category respectively. To do that, we iterate the
+            hashing repeatedly for each interest to get the minimum. The repetition of hashing is necessary to increase
+            the accuracy and reduce the variance of the similarity estimation between two sets. In this case, the
+            numHashes is the number of repetition, and I set the value to 10 for now.
+        </p>
+
+        <pre><code>const sig = [];
+
+for (let i = 0; i &lt; numHashes; i++) {
+    let min = Infinity;
+
+    for (let val of augmentedSet) {
+        min = Math.min(min, hash(i, val));
+    }
+
+    sig.push(min);
+}</code></pre>
+
+        <p>
+            After the MinHashing value has been calculated, LSH will group the user based on the values. The result of
+            the MinHashing value will be in the form of mapping user id to array of MinHashing, for example:
+        </p>
+
+        <pre><code>{
+    1: [12,55,81,9,6,9],
+    2: [12,55,8,3,21,49,12,1]
+}</code></pre>
+
+        <p>
+            Then, LSH will split the array of hashing values into groups, which is called bands. Here are the parameters
+            for the LSH:
+        </p>
+
+        <pre><code>const numHashes = 10;
+const bands = 5;
+const rowsPerBand = numHashes / bands;</code></pre>
+
+        <p>
+            This means that the values will be split into 5 groups, and the rowsPerBand in this case means that each
+            group will contain 2 numbers.
+        </p>
+
+        <p>
+            In the implementation of the LSH, the label of the key will be named with the format {current band}:{list of
+            numbers}. For example, in user1, the key would be “0:12-55”, “1:81-9”, etc.
+        </p>
+
+        <pre><code>function getBuckets(userSigs) {
+    const buckets = {};
+
+    for (let [userId, sig] of Object.entries(userSigs)) {
+        for (let b = 0; b &lt; bands; b++) {
+            const band = sig.slice(b * rowsPerBand, (b + 1) * rowsPerBand).join("-");
+            const key = `${b}:${band}`;
+
+            if (!buckets[key]) buckets[key] = [];
+            buckets[key].push(userId);
+        }
+    }
+
+    return buckets;
+}</code></pre>
+
+        <p>
+            The LSH will return in the format of key:arrays of user id :
+        </p>
+
+        <pre><code>{
+    “0:12-55”: [1,2]
+    “1:81,9”: [1],
+    ...
+}</code></pre>
+
+        <p>
+            The buckets are able to show which users are most likely to be similar, which reduces the number of
+            comparisons needed for Jaccard similarity later instead of directly comparing users interest with every other
+            user. Finally, I calculated the Jaccard similarity for interest and category separately based on user
+            grouping, and combined the scoring together at the end.
+        </p>
+
+        <pre><code>function jaccard(a, b) {
+    if (!a || !b || a.length === 0 || b.length === 0) return 0;
+
+    const setA = new Set(a);
+    const setB = new Set(b);
+
+    const inter = [...setA].filter(x =&gt; setB.has(x));
+    const union = new Set([...setA, ...setB]);
+
+    return union.size &gt; 0 ? inter.length / union.size : 0;
+}
+
+function calculateSimilarity(userA, userB) {
+    const interestsA = userInterests[userA] || [];
+    const interestsB = userInterests[userB] || [];
+
+    const directJaccard = jaccard(interestsA, interestsB);
+
+    const categoriesA = interestsA.map(i =&gt; interestToCategory[i]).filter(Boolean);
+    const categoriesB = interestsB.map(i =&gt; interestToCategory[i]).filter(Boolean);
+
+    const categoryJaccard = jaccard(categoriesA, categoriesB);
+
+    const INTEREST_WEIGHT = 0.5;
+    const CATEGORY_WEIGHT = 0.5;
+
+    const score = (INTEREST_WEIGHT * directJaccard) + (CATEGORY_WEIGHT * categoryJaccard);
+
+    return {
+        score,
+        interestJaccard: directJaccard,
+        categoryJaccard: categoryJaccard,
+        common: interestsA.filter(i =&gt; interestsB.includes(i))
+    };
+}</code></pre>
+
+        <p>
+            To deal with the edge cases, if there are not enough users in the bucket, I decided to fill in a unique
+            number of users randomly.
+        </p>
+
+        <p>
+            For future improvements, I will find ways to optimize the number of hashing iteration and number of bands by
+            experimenting with the numbers and see which one works effectively. In this case, the number of hashing
+            brings more accuracy, but it takes more computation. And the number of bands determine how strict the group
+            criteria is.
+        </p>
+
+        <p>
+            Source:
+            <br>
+            <a href="https://giorgi.tech/blog/minhashing/" target="_blank">
+                https://giorgi.tech/blog/minhashing/
+            </a>
+            <br>
+            <a href="https://arpitbhayani.me/blogs/jaccard-minhash/" target="_blank">
+                https://arpitbhayani.me/blogs/jaccard-minhash/
+            </a>
+            <br>
+            <a href="https://www.pinecone.io/learn/series/faiss/locality-sensitive-hashing/" target="_blank">
+                https://www.pinecone.io/learn/series/faiss/locality-sensitive-hashing/
+            </a>
+        </p>
+    </div>
+</body>
+
+</html>
