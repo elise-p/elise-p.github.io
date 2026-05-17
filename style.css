@@ -199,25 +199,31 @@ body {
 }
 
 .blog-links {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    margin-bottom: 40px;
+    padding: 20px 24px;
 
-    margin-bottom: 48px;
-    padding: 24px;
-
-    background-color: white;
+    background-color: #f8f8f8;
     border: 1px solid #ddd;
     border-radius: 14px;
+}
 
-    overflow-wrap: anywhere;
+.blog-links h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
 }
 
 .blog-links p {
-    margin-top: 24px;
-    margin-bottom: 0;
+    margin: 10px 0;
+}
 
-    font-weight: 700;
+.blog-links a {
+    color: #005fcc;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.blog-links a:hover {
+    text-decoration: underline;
 }
 
 .blog-page h1 {

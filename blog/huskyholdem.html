@@ -14,59 +14,133 @@
     <div class="main-content blog-page">
         <a class="back-link" href="../index.html">← Back</a>
 
-        <div class="blog-links">
-            <a href="https://huskyholdem.atcuw.org/" target="_blank">
-                https://huskyholdem.atcuw.org/
-            </a>
+        <header class="blog-hero">
+            <div>
+                <h1>Running a Scalable Poker Bot Competition Platform</h1>
 
-            <a href="https://github.com/kipiiler/the-betting-edge" target="_blank">
-                https://github.com/kipiiler/the-betting-edge
-            </a>
+                <p>
+                    Behind the scenes of building and scaling infrastructure for a live multiplayer poker bot
+                    competition.
+                </p>
+            </div>
 
-            <p>More details about the competition:</p>
+        </header>
 
-            <a href="https://www.linkedin.com/posts/atc-uw_huskyholdem-pokerbots-uw-activity-7359667230130786304-Ka-4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM"
-                target="_blank">
-                https://www.linkedin.com/posts/atc-uw_huskyholdem-pokerbots-uw-activity-7359667230130786304-Ka-4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM
-            </a>
-        </div>
+        <section class="project-links">
+            <h2>Project Links</h2>
 
-        <div class="blog-image-placeholder">
-            Image placeholder: Poker Replay screenshot
-        </div>
+            <p>
+                <strong>Website:</strong>
+                <a href="https://huskyholdem.atcuw.org/" target="_blank">
+                    Husky Hold’em
+                </a>
+            </p>
+
+            <p>
+                <strong>GitHub:</strong>
+                <a href="https://github.com/kipiiler/the-betting-edge" target="_blank">
+                    The Betting Edge
+                </a>
+                and
+                <a href="https://github.com/ATC-UW/huskyholdem-client" target="_blank">
+                    Husky Hold’em Client
+                </a>
+            </p>
+
+            <p>
+                <strong>More Details:</strong>
+                <a href="https://www.linkedin.com/posts/atc-uw_huskyholdem-pokerbots-uw-activity-7359667230130786304-Ka-4?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM"
+                    target="_blank">
+                    LinkedIn Post
+                </a>
+            </p>
+        </section>
+
+        <img class="blog-image" src="../asset/huskyholdem-replay.png" alt="Husky Hold'em poker replay screenshot">
+
+        <h1>Overview of Husky Hold’em</h1>
 
         <p>
-            During last summer, I was one of the software developers hosting a pokerbot competition named Husky Hold’em.
-            Husky Hold’em is a pokerbot competition hosting over 50 competitors, where each competitor submitted their
-            python file
-            (<a href="https://github.com/kipiiler/poker-client" target="_blank">https://github.com/kipiiler/poker-client</a>),
-            and each simulation run will choose 6 random users to run their python pokerbots against each other. When
-            the user first submitted their file, it was run against 5 other default python pokerbots from our server. In
-            this project, I was responsible for creating the API to run the simulation between 6 real users, and scaling
-            up and down the container based on the current number of users testing their files.
+            Husky Hold’em is a poker bot competition hosting almost 100 users, where each user submitted
+            their Python file using the
+            <a href="https://github.com/kipiiler/poker-client" target="_blank">poker client template</a>.
+            Each play consists of 6 users competing against each other through automated poker simulations.
         </p>
 
-        <h2>Basic Overview</h2>
-
-        <div class="blog-image-placeholder">
-            Image placeholder: Architecture diagram
-        </div>
+        <p>
+            In this project, I was one of the software developers responsible for hosting the poker bot
+            competition. I was responsible for ensuring the competition platform could reliably support
+            multiple users running poker bot simulations simultaneously by developing backend APIs to
+            coordinate multiplayer simulations and implementing Docker container scaling based on active
+            user demand.
+        </p>
 
         <p>
-            Since the run for each play is asynchronous, we need to put the job in a queue, which then the worker will
-            execute in a FIFO format. First, the worker will acquire one of the game servers from the game pool, and
-            based on the list of users the worker gets, the worker will get the python files associated with each user,
-            and place the files in a container. It is important for the user's file to be placed in a different container
-            for isolation and to not let the other python bot be hacked or read through the other files. Then, the result
-            will be obtained and there will be a container clean up.
+            This type of skill is especially valuable for systems where many users are interacting with
+            shared infrastructure at the same time. In a business setting, this could apply to platforms
+            that run automated tests, process background jobs, execute customer workflows, or handle
+            multiple internal services at once. The system still needs to coordinate workloads, isolate
+            execution safely, and scale resources based on demand so one user’s process does not affect
+            the experience of others.
+        </p>
+
+        <p>
+            Since our users were constantly submitting and testing new poker bots throughout the competition,
+            handling concurrent execution and infrastructure scaling became an important part of maintaining
+            a stable platform. In this blog, I want to explain how I designed the backend workflow and scaling
+            system behind the platform.
+        </p>
+
+        <h2>Basic Architecture</h2>
+
+        <img class="blog-image" src="../asset/huskyholdem-architecture.png"
+            alt="Husky Hold'em backend architecture diagram">
+
+        <p>
+            When we want to run one of the plays between the 6 users, we call the API route to that endpoint.
+            However, the game is not executed directly because each simulation takes time to run. Instead,
+            the game is processed asynchronously through a queue system. This is important because multiple
+            users may submit and test their poker bots at the same time, and directly running every simulation
+            immediately could overload the system or cause conflicts between concurrent plays.
+        </p>
+
+        <p>
+            To handle this, each simulation request is placed into a message queue. When it is the game’s turn
+            to be processed from the queue, a worker takes the job and starts preparing the simulation environment.
+            The worker first sets up the game server, then creates separate containers for each of the 6 users
+            participating in the match.
+        </p>
+
+        <p>
+            We could not simply run the user-submitted Python files directly on the host machine because it would
+            create major security and stability risks. Instead, each poker bot runs inside its own isolated Docker
+            container. This isolation helps prevent users from accessing other users’ files, interfering with other
+            running bots, or affecting the overall system environment. After the simulation is completed, the results
+            are collected, returned to the system, and the containers are cleaned up to free resources for future
+            matches.
         </p>
 
         <h2>API of Running 6 Python Pokerbots</h2>
 
         <p>
-            The simulation worker runs the full lifecycle of the pokerbot match by dynamically creating isolated
-            environments for each pokerbot. After downloading the users’ files from Supabase, the file is converted into
-            tar streams and injected directly into each respective Docker container.
+            Running a 6-player pokerbot match was not just a simple API call that executed one Python script.
+            Each simulation required the backend to prepare a temporary runtime environment, load 6 different
+            user-submitted programs, connect them to the same game server, run them concurrently, collect the
+            results, and then clean everything up afterward.
+        </p>
+
+        <p>
+            The main challenge was that each user submitted their own Python file, which meant the system could
+            not safely run the files directly on the host machine. To handle this, each pokerbot was placed into
+            its own Docker container. This gave every player an isolated environment, so one user’s code could not
+            access another user’s files, interfere with the game server, or affect the stability of the platform.
+        </p>
+
+        <p>
+            Before the match started, the worker downloaded each user’s submitted file from Supabase and packaged
+            the required files into a tar stream. This allowed the backend to inject <code>player.py</code> and
+            <code>requirements.txt</code> directly into the correct container without manually copying files through
+            the local filesystem.
         </p>
 
         <pre><code>with open("player.py", "rb") as player_file, open("requirements.txt", "rb") as packages_file:
@@ -76,9 +150,11 @@
     })</code></pre>
 
         <p>
-            Then, the game server container is acquired from the game container pool and launched using the PokerDen
-            engine. Each user container is then connected to the same internal Docker network as the game server,
-            allowing all 6 pokerbots to communicate without exposing the simulation publicly.
+            After the user files were prepared, the worker acquired a game server container from the container pool
+            and started the
+            <a href="https://github.com/kipiiler/pokerden-engine" target="_blank">PokerDen engine</a>.
+            Instead of creating everything from scratch every time, the system reused available game server containers
+            from the pool, which helped reduce startup overhead and made simulations faster to launch.
         </p>
 
         <pre><code>exec_command = f"python main.py --port={port} --sim --players={len(users_list)} --sim-rounds={num_rounds}"
@@ -89,8 +165,14 @@ if container:
     container.exec_run(exec_command, detach=True)
     logger.info(f"Game started on container {game_server_name} for {num_rounds} rounds.")</code></pre>
 
+        <p>
+            Each pokerbot container was then connected to the same internal Docker network as the game server.
+            This part is important because the containers needed to communicate with each other during the match,
+            but the simulation did not need to be publicly exposed. The network acted as a private environment
+            where only the game server and the 6 player containers could interact.
+        </p>
+
         <pre><code>def connect_container_to_network(self, network_name: str, container_name: str) -> bool:
-    """Connect a container to a network."""
     try:
         network = self.client.networks.get(network_name)
         container = self.client.containers.get(container_name)
@@ -107,6 +189,13 @@ if container:
         logger.error(f"Failed to connect container to network '{network_name}': {str(e)}")
         return False</code></pre>
 
+        <p>
+            Once the containers were connected, the worker installed each bot’s dependencies and started the
+            player process. Since dependency installation and bot execution can fail, the worker had to check
+            for package installation errors and use timeout protection during execution. This prevents one broken
+            or slow pokerbot from blocking the entire simulation forever.
+        </p>
+
         <pre><code># Get users file
 tarstream_clone = clone_bytes(users_file[username])
 user_container.put_archive("/app", tarstream_clone)
@@ -116,7 +205,6 @@ self.docker_pool_manager.docker_service.connect_container_to_network(
     user_bot_container_name
 )
 
-# Install packages with timeout protection
 logger.info("Installing Python packages...")
 out = self.docker_pool_manager.docker_service.install_python_package(user_bot_container_name)
 
@@ -125,12 +213,17 @@ if "error" in out.lower():
 
 logger.info("Package installation successful")</code></pre>
 
-        <pre><code># Execute the player bot
-exec_command = f"python main.py --host={game_server_name} --port={port} -s True"
+        <p>
+            The 6 player containers were launched asynchronously instead of one by one. This matters because poker
+            is an interactive simulation, so all 6 bots need to be active during the same match. Using
+            <code>asyncio.create_task</code> allowed the worker to start and monitor multiple player containers
+            at the same time.
+        </p>
+
+        <pre><code>exec_command = f"python main.py --host={game_server_name} --port={port} -s True"
 
 logger.info(f"Executing user bot: {exec_command}")
 
-# Use timeout protection for user bot execution
 temp_task = asyncio.create_task(
     self._safe_exec_run(
         user_container,
@@ -142,30 +235,29 @@ temp_task = asyncio.create_task(
 tasks[username] = temp_task</code></pre>
 
         <p>
-            To avoid blocking execution, the worker launches each container asynchronously using asyncio.create_task,
-            enabling all players to participate in the match concurrently. During execution, the worker monitors
-            container health, manages timeouts, and collects final scores directly from the running containers after the
-            simulation ends. The final match results are serialized into JSON and stored for frontend retrieval, where
-            short polling is used to continuously update the user interface while simulations are still running.
+            After the match ended, the worker collected the final scores from the running containers, serialized
+            the result into JSON, and stored it so the frontend could retrieve updates. Since simulations could
+            take time, the frontend used short polling to keep checking the simulation status and update the user
+            interface while the match was still running.
         </p>
 
-        <h2>Scaling Game Container</h2>
+        <h2>Scaling the Game Server Container Pool</h2>
 
-        <div class="blog-image-placeholder">
-            Image placeholder: Container Manager Center screenshot
-        </div>
+        <img class="blog-image" src="../asset/huskyholdem-container-manager.png"
+            alt="Husky Hold'em container manager screenshot">
 
         <p>
-            The next challenge was managing the load of the game server during live usage. A single match consumes one
-            reusable game server and 6 temporary pokerbot containers running concurrently. During periods of higher
-            traffic, the system needs more available game servers ready to accept incoming simulations. During lower
-            traffic, keeping too many prewarmed containers alive wastes memory and compute resources unnecessarily.
+            The next challenge was managing the load of the game servers during live usage. A single match requires
+            one reusable game server container and 6 temporary pokerbot containers running at the same time. During
+            higher traffic, the platform needs more available game server containers ready to accept incoming
+            simulations.
+            During lower traffic, keeping too many prewarmed game servers alive wastes memory and compute resources.
         </p>
 
         <p>
-            To handle this, we need an API route that can scale up or down the amount of game containers depending on
-            demand. Before performing any scaling operation, the worker first checks the current pool state and compares
-            it against the requested target capacity.
+            To handle this, I worked on a scaling workflow that adjusts the size of the game server container pool
+            based on current demand. Before making any changes, the worker checks the current pool state and compares
+            it with the requested target size.
         </p>
 
         <pre><code>status = pool_manager.get_pool_status()
@@ -191,16 +283,16 @@ elif target_size < total_containers:
     await self._scale_down_docker(data, total_containers)</code></pre>
 
         <p>
-            One of the more difficult parts of this flow was making scaling operations safe across multiple workers.
-            Since multiple simulation workers can consume jobs from RabbitMQ concurrently, there is a possibility that
-            one worker could begin scaling the pool while another worker simultaneously tries to acquire or release a
-            game server container. Without coordination, this could create race conditions where the pool state becomes
-            inconsistent or active simulations accidentally interact with containers being removed.
+            The difficult part was not just adding or removing containers. The harder problem was making sure scaling
+            happened safely while simulations were also running. Multiple workers could be processing jobs from RabbitMQ
+            at the same time, and one worker might try to scale the pool while another worker is trying to acquire a
+            game server for a new match. Without coordination, the pool state could become inconsistent, or the system
+            could accidentally remove a container that another simulation was about to use.
         </p>
 
         <p>
-            To prevent this, I added a Redis-based scaling lock that temporarily blocks concurrent scaling operations
-            while the pool is being modified.
+            To prevent that, I added a Redis-based scaling lock. The lock makes sure only one scaling operation can
+            modify the game server pool at a time.
         </p>
 
         <pre><code>if self.redis_client.set(
@@ -213,14 +305,15 @@ elif target_size < total_containers:
     return self</code></pre>
 
         <p>
-            Scaling up is relatively straightforward because new reusable game server containers can simply be added into
-            the pool. Each newly provisioned container becomes an idle simulation server ready to accept future matches.
+            Scaling up was more straightforward because the system could create additional reusable game server
+            containers
+            and add them to the pool. Once created, each container becomes an idle game server that can be assigned to a
+            future simulation.
         </p>
 
         <p>
-            Scaling down required more caution because active game servers should never be removed while simulations are
-            still running. Instead of removing containers blindly, the system only targets idle game servers that are not
-            currently assigned to any active worker.
+            Scaling down needed more protection. The system should never remove a game server that is currently running
+            a match, so it only targets idle containers that are not assigned to an active simulation.
         </p>
 
         <pre><code>idle_containers = (
@@ -244,10 +337,10 @@ for container in idle_containers:
     to_remove_count -= 1</code></pre>
 
         <p>
-            Another issue I encountered was handling situations where scaling could not complete immediately. For
-            example, scaling down might temporarily fail because there are not enough idle containers available yet.
-            Instead of failing the scaling job instantly, the worker requeues the request with retry metadata and
-            attempts the operation again later.
+            Another issue was handling cases where scaling could not finish immediately. For example, scaling down
+            might fail temporarily because most of the game server containers are still busy running simulations.
+            Instead of failing the scaling request right away, the worker requeues the job with retry metadata and
+            tries again later.
         </p>
 
         <pre><code>if job_retries >= settings.SCALE_DOCKER_MAX_RETRIES:
@@ -265,12 +358,50 @@ else:
     )</code></pre>
 
         <p>
-            This retry-based approach made the scaling pipeline more fault tolerant and reduced the likelihood of
-            transient infrastructure states causing permanent failures. Combined with Redis locking and container pool
-            management, the system is able to resize available game server capacity dynamically while still protecting
-            active simulations from interruption.
+            This made the scaling workflow safer and more fault tolerant. The system could resize the available game
+            server capacity based on demand while still protecting active simulations from being interrupted.
+        </p>
+
+        <h2>Conclusion</h2>
+
+        <p>
+            The overall system ended up feeling more like a distributed execution system rather than a normal web
+            application. A single simulation request involved multiple coordinated components working together,
+            including asynchronous job processing, container orchestration, isolated runtime environments, private
+            Docker networking, timeout handling, result collection, and dynamic scaling workflows.
+        </p>
+
+        <p>
+            One of the more important parts of the system was handling concurrency reliably. Since multiple users could
+            continuously submit and test pokerbots at the same time, the platform needed to coordinate shared
+            infrastructure
+            carefully while still keeping each simulation isolated from others. Reliability was not only about whether a
+            single API route worked correctly, but also whether multiple workers, containers, and simulations could
+            operate
+            at the same time without interfering with each other.
+        </p>
+
+        <p>
+            The scaling workflow also became more than simply adding or removing containers. Scaling decisions needed to
+            account for active simulations, available game servers in the pool, retry handling, and synchronization
+            between
+            multiple workers consuming jobs through RabbitMQ. Features such as Redis locking, retry-based scaling jobs,
+            and
+            reusable container pools became important for preventing inconsistent infrastructure states during live
+            usage.
+        </p>
+
+        <p>
+            Although the project was built around a poker bot competition, the backend workflow is similar to systems
+            that
+            need to execute many concurrent workloads safely on shared infrastructure. Similar patterns can appear in
+            online
+            code execution platforms, automated testing systems, background job processing systems, and internal tools
+            that
+            need to run multiple user or business workflows reliably.
         </p>
     </div>
+
 </body>
 
 </html>
