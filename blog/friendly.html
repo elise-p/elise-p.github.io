@@ -13,55 +13,97 @@
     <div class="main-content blog-page">
         <a class="back-link" href="../index.html">← Back</a>
 
-        <div class="blog-image-placeholder">
-            Image placeholder: Friendly project presentation image
-        </div>
+        <header class="blog-hero">
+            <div>
+                <h1>Building a Recommendation Algorithm for a Student Social App</h1>
+
+                <p>
+                    How I replaced a graph database idea with Jaccard Similarity, MinHashing, and LSH
+                    to match UW students based on shared interests.
+                </p>
+            </div>
+
+        </header>
+
+        <section class="project-links">
+            <h2>Project Links</h2>
+
+            <p>
+                <strong>GitHub:</strong>
+                <a href="https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration" target="_blank">
+                    Friend-ly Repository
+                </a>
+            </p>
+
+            <p>
+                <strong>Link to the presentation I did in front of students and professionals! :</strong>
+                <a href="https://www.linkedin.com/posts/elise-poniman_thrilled-to-share-a-project-my-team-and-i-ugcPost-7336882316528537600-tsot?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM"
+                    target="_blank">
+                    LinkedIn Post
+                </a>
+            </p>
+        </section>
+
+        <img class="blog-image blog-image-small" src="../asset/friendly-presentation.jpg" alt="Friend-ly project presentation poster">
+
+        <h2>Overview of the Project</h2>
 
         <p>
-            I was grateful to be able to present this project with my team in front of other students and engineers, as
-            shown in this Linkedin post!
-            <br>
-            <a href="https://www.linkedin.com/posts/elise-poniman_thrilled-to-share-a-project-my-team-and-i-ugcPost-7336882316528537600-tsot?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM"
-                target="_blank">
-                https://www.linkedin.com/posts/elise-poniman_thrilled-to-share-a-project-my-team-and-i-ugcPost-7336882316528537600-tsot?utm_source=share&utm_medium=member_desktop&rcm=ACoAAD_mJzUBY-0S7hNZeEzQdJk7rTQPk32X1zM
-            </a>
+            This project was built under the Husky Coding Project at UW. The goal of the project was to
+            create a social media platform where UW students can connect with other students based on
+            shared interests, hobbies, and campus communities.
         </p>
 
         <p>
-            Here is the GitHub Project for that
-            <br>
-            <a href="https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration" target="_blank">
-                https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration
-            </a>
-        </p>
-
-        <h2>Background of the Project</h2>
-
-        <p>
-            I decided to join Husky Coding Project Club at UW to improve my SWE skills. During that time, me and my team
-            decided to create a social media app for UW students to connect with each other based on their interests and
-            hobbies, so that new students are able to connect with each other easier.
+            The main problem this project focuses on is student discovery. New students may have a hard
+            time finding people with similar interests, especially outside of their classes, clubs, or
+            existing friend groups. Instead of making users manually search through many profiles, the
+            platform recommends students who have overlapping interests so they can find more relevant
+            connections faster.
         </p>
 
         <p>
-            On this project, I was responsible for the backend, specifically the API and the recommendation algorithm to
-            match users based on their interest. Initially, I decided to use a graph database, as we can use the edges to
-            find the users with overlapping interests. Therefore, I decided to explore multiple graph databases, such as
-            Neo4j and Amazon Neptune.
+            In this project, I worked on the backend, specifically the API design and the recommendation
+            logic for matching users based on their interests. I initially explored graph databases such
+            as Neo4j and Amazon Neptune because the problem naturally fits a graph structure, where users
+            and interests can be represented as connected nodes.
         </p>
 
         <p>
-            Slowly, I realized that it is not viable for us to use a graph database, because most of the software
-            requires you to pay a high amount of fee to be hosted and at that time, we didn’t have the budget to do so.
-            Therefore, I tried to find another way to tackle this problem, by finding a suitable algorithm. That’s when I
-            decided to use a mix of Jaccard Similarity and Min-Hashing + LSH
+            However, after looking into the cost and hosting requirements, I realized that using a graph
+            database was not practical for our project. We did not have the budget or infrastructure to
+            maintain that kind of setup, so I looked for a lighter approach that could still solve the
+            matching problem. I ended up using Jaccard Similarity with MinHashing and Locality-Sensitive
+            Hashing to compare users based on their shared interests more efficiently.
         </p>
 
-        <h2>Jaccard Similarity and Min-Hashing + LSH</h2>
+        <p>
+            This algorithm is useful in other fields because many products need a practical way to match
+            or group similar items from simple data, such as interests, tags, skills, categories,
+            preferences, or document keywords. The same approach can apply to employee networking,
+            mentorship matching, event recommendations, support ticket grouping, document similarity,
+            duplicate detection, or any platform where users need to find relevant matches from a large
+            set of options.
+        </p>
 
         <p>
-            Jaccard Similarity is the equation of finding the overlapping of two sets and scoring between 0 and 1, which
-            is shown under this equation:
+            In this blog, I will explain what Jaccard Similarity with MinHashing and Locality-Sensitive
+            Hashing is, and how I applied it to this project.
+        </p>
+
+        <h2>Jaccard Similarity with MinHashing and LSH</h2>
+
+        <p>
+            To recommend users based on shared interests, I first needed a way to measure how similar
+            two users are. Since each user has a set of interests, this problem can be treated as a set
+            comparison problem. For example, if one user likes gaming, hiking, and photography, while
+            another user likes gaming, photography, and music, then their similarity depends on how many
+            interests overlap compared to the total number of unique interests between them.
+        </p>
+
+        <p>
+            This is where Jaccard Similarity comes in. Jaccard Similarity compares two sets by dividing
+            the number of shared items by the total number of unique items across both sets.
         </p>
 
         <div class="blog-formula">
@@ -69,36 +111,55 @@
         </div>
 
         <p>
-            In this case, scoring of 0 means that there is no similarity, and scoring of 1 means that they are
-            identical. In this case, it is useful to find the similarity of interest based on this equation.
+            A score of 0 means the two users have no shared interests, while a score of 1 means their
+            interests are exactly the same. In this project, that score can be used to estimate how
+            closely two users match based on their selected interests.
         </p>
 
         <p>
-            However, if I only use the Jaccard Similarity equation, then calculating each pair of interest between each
-            user is going to take O(n^2) time complexity. This is not feasible especially under a large number of users,
-            as we want to show the recommendation to the user quickly. This is where Min-Hashing comes in.
+            However, using only Jaccard Similarity creates a scalability problem. If the platform has
+            many users, comparing every user against every other user would take O(n²) time. That means
+            as the number of users grows, the number of comparisons grows very quickly. This is not good
+            for a recommendation system because users expect matches to appear quickly instead of waiting
+            for the backend to compare every possible pair.
         </p>
 
         <p>
-            MinHashing is the technique to estimate similarity between sets and produce a hash value. The purpose in this
-            case is to group users based on the hash values through Locality-Sensitive Hashing (LSH). LSH will split the
-            hash value into bands, and the users landing in the same bucket will become candidate matches.
+            To make the matching process more efficient, I used MinHashing. Instead of comparing every
+            user’s full list of interests directly, MinHashing turns each user’s interest set into a
+            smaller signature that still represents the original set. This makes it faster to estimate
+            which users are likely to be similar before doing a more detailed comparison.
+        </p>
+
+        <p>
+            After that, I used Locality-Sensitive Hashing, or LSH, to group users with similar signatures.
+            LSH divides each signature into smaller sections called bands, then places users into buckets
+            based on those sections. If two users land in the same bucket, they become candidate matches.
+            This helps the system avoid comparing every user with every other user and focus only on users
+            who are more likely to share similar interests.
         </p>
 
         <h2>Implementation</h2>
 
         <p>
-            In the database schema, I divided the interests section into interest and their categories, such that some
-            scoring is still given for interest under the same categories. (For example, basketball and swimming are
-            under sports category). Therefore, the algorithm above will be implemented for both the category and the
-            interest section.
+            In the database schema, I separated interests into two levels: the specific interest and the
+            interest category. For example, basketball and swimming are different interests, but both
+            belong under the sports category. I did this because two users may not have the exact same
+            interest, but they may still be similar if their interests fall under the same category.
         </p>
 
         <p>
-            First, I calculate the MinHashing value of the interest and category respectively. To do that, we iterate the
-            hashing repeatedly for each interest to get the minimum. The repetition of hashing is necessary to increase
-            the accuracy and reduce the variance of the similarity estimation between two sets. In this case, the
-            numHashes is the number of repetition, and I set the value to 10 for now.
+            For example, one user may choose basketball while another user chooses swimming. Their direct
+            interest overlap is not the same, but they are still both interested in sports. Because of
+            that, I applied the similarity logic to both the interest level and the category level. This
+            allowed the recommendation system to give credit for exact interest matches while still
+            recognizing broader similarities between users.
+        </p>
+
+        <p>
+            The first step was calculating the MinHash signature for each user’s interests and categories.
+            For each user, the algorithm repeatedly hashes every value in the set and keeps the minimum
+            hash value from each round. Each minimum value becomes one part of the user’s MinHash signature.
         </p>
 
         <pre><code>const sig = [];
@@ -114,18 +175,33 @@ for (let i = 0; i &lt; numHashes; i++) {
 }</code></pre>
 
         <p>
-            After the MinHashing value has been calculated, LSH will group the user based on the values. The result of
-            the MinHashing value will be in the form of mapping user id to array of MinHashing, for example:
+            The reason this hashing process is repeated multiple times is to improve the accuracy of the
+            similarity estimate. One hash value alone would be too unstable, because it may not represent
+            the set well. By repeating the hashing process several times, the final signature gives a better
+            approximation of how similar two users are. In this implementation, <code>numHashes</code>
+            represents the number of repeated hash rounds, and I set it to 10 for now.
+        </p>
+
+        <p>
+            After calculating the MinHash signatures, each user has a mapping from their user ID to an
+            array of hash values. For example:
         </p>
 
         <pre><code>{
-    1: [12,55,81,9,6,9],
-    2: [12,55,8,3,21,49,12,1]
+    1: [12, 55, 81, 9, 6, 9],
+    2: [12, 55, 8, 3, 21, 49]
 }</code></pre>
 
         <p>
-            Then, LSH will split the array of hashing values into groups, which is called bands. Here are the parameters
-            for the LSH:
+            At this point, the system has a compact representation of each user’s interest set. However,
+            the goal is still not to compare every user against every other user. That would bring back
+            the same scalability problem. This is where Locality-Sensitive Hashing, or LSH, is used.
+        </p>
+
+        <p>
+            LSH takes the MinHash signature and splits it into smaller groups called bands. Users that land
+            in the same bucket for a band become candidate matches. In other words, LSH helps the system
+            quickly narrow down which users are likely to be similar before calculating the final Jaccard score.
         </p>
 
         <pre><code>const numHashes = 10;
@@ -133,13 +209,32 @@ const bands = 5;
 const rowsPerBand = numHashes / bands;</code></pre>
 
         <p>
-            This means that the values will be split into 5 groups, and the rowsPerBand in this case means that each
-            group will contain 2 numbers.
+            In this case, the signature has 10 hash values and is split into 5 bands. Since
+            <code>rowsPerBand</code> is 2, each band contains 2 hash values. For example, if a user has this signature:
         </p>
 
+        <pre><code>[12, 55, 81, 9, 6, 9, 20, 3, 11, 7]</code></pre>
+
         <p>
-            In the implementation of the LSH, the label of the key will be named with the format {current band}:{list of
-            numbers}. For example, in user1, the key would be “0:12-55”, “1:81-9”, etc.
+            Then the bands would look like this:
+        </p>
+
+        <pre><code>Band 0: [12, 55]
+Band 1: [81, 9]
+Band 2: [6, 9]
+Band 3: [20, 3]
+Band 4: [11, 7]</code></pre>
+
+        <p>
+            In the implementation, each bucket key is created using the current band number and the hash
+            values inside that band. For example, the first two bands would become:
+        </p>
+
+        <pre><code>"0:12-55"
+"1:81-9"</code></pre>
+
+        <p>
+            Here is the bucket generation function:
         </p>
 
         <pre><code>function getBuckets(userSigs) {
@@ -147,10 +242,14 @@ const rowsPerBand = numHashes / bands;</code></pre>
 
     for (let [userId, sig] of Object.entries(userSigs)) {
         for (let b = 0; b &lt; bands; b++) {
-            const band = sig.slice(b * rowsPerBand, (b + 1) * rowsPerBand).join("-");
+            const band = sig
+                .slice(b * rowsPerBand, (b + 1) * rowsPerBand)
+                .join("-");
+
             const key = `${b}:${band}`;
 
             if (!buckets[key]) buckets[key] = [];
+
             buckets[key].push(userId);
         }
     }
@@ -159,20 +258,26 @@ const rowsPerBand = numHashes / bands;</code></pre>
 }</code></pre>
 
         <p>
-            The LSH will return in the format of key:arrays of user id :
+            The output of this function is a mapping from bucket keys to users who landed in the same bucket.
+            For example:
         </p>
 
         <pre><code>{
-    “0:12-55”: [1,2]
-    “1:81,9”: [1],
-    ...
+    "0:12-55": [1, 2],
+    "1:81-9": [1]
 }</code></pre>
 
         <p>
-            The buckets are able to show which users are most likely to be similar, which reduces the number of
-            comparisons needed for Jaccard similarity later instead of directly comparing users interest with every other
-            user. Finally, I calculated the Jaccard similarity for interest and category separately based on user
-            grouping, and combined the scoring together at the end.
+            This means users 1 and 2 are candidate matches because they share the same hash pattern in band 0.
+            The system can then focus on comparing these likely matches instead of checking every possible user
+            pair. This is the main reason LSH is useful here. It reduces the number of comparisons needed before
+            running the more detailed Jaccard Similarity calculation.
+        </p>
+
+        <p>
+            After finding the candidate matches, I calculate the Jaccard Similarity for both interests and
+            categories. The interest score measures exact overlap between selected interests, while the category
+            score gives credit for broader similarity.
         </p>
 
         <pre><code>function jaccard(a, b) {
@@ -185,23 +290,34 @@ const rowsPerBand = numHashes / bands;</code></pre>
     const union = new Set([...setA, ...setB]);
 
     return union.size &gt; 0 ? inter.length / union.size : 0;
-}
+}</code></pre>
 
-function calculateSimilarity(userA, userB) {
+        <p>
+            Then, I combine the direct interest similarity and the category similarity into one final score.
+        </p>
+
+        <pre><code>function calculateSimilarity(userA, userB) {
     const interestsA = userInterests[userA] || [];
     const interestsB = userInterests[userB] || [];
 
     const directJaccard = jaccard(interestsA, interestsB);
 
-    const categoriesA = interestsA.map(i =&gt; interestToCategory[i]).filter(Boolean);
-    const categoriesB = interestsB.map(i =&gt; interestToCategory[i]).filter(Boolean);
+    const categoriesA = interestsA
+        .map(i =&gt; interestToCategory[i])
+        .filter(Boolean);
+
+    const categoriesB = interestsB
+        .map(i =&gt; interestToCategory[i])
+        .filter(Boolean);
 
     const categoryJaccard = jaccard(categoriesA, categoriesB);
 
     const INTEREST_WEIGHT = 0.5;
     const CATEGORY_WEIGHT = 0.5;
 
-    const score = (INTEREST_WEIGHT * directJaccard) + (CATEGORY_WEIGHT * categoryJaccard);
+    const score =
+        (INTEREST_WEIGHT * directJaccard) +
+        (CATEGORY_WEIGHT * categoryJaccard);
 
     return {
         score,
@@ -212,31 +328,44 @@ function calculateSimilarity(userA, userB) {
 }</code></pre>
 
         <p>
-            To deal with the edge cases, if there are not enough users in the bucket, I decided to fill in a unique
-            number of users randomly.
+            In this version, I gave direct interest overlap and category overlap equal weight. This means the
+            system values exact shared interests, but it also considers users similar if they are interested
+            in the same general category. For example, two users who both choose basketball would score higher
+            than two users who choose basketball and swimming, but the basketball and swimming users would still
+            receive some similarity score because both interests belong to sports.
+        </p>
+
+        <h2>Conclusion</h2>
+
+        <p>
+            The recommendation system in this project uses interests as the main data source, but the same
+            approach can be applied to other types of grouped or tag-based data. In this case, each user has a
+            set of interests, and the system tries to find users with similar sets. In another product, those
+            sets could be skills, job preferences, product categories, saved items, watched content, document
+            keywords, support ticket labels, or event preferences.
         </p>
 
         <p>
-            For future improvements, I will find ways to optimize the number of hashing iteration and number of bands by
-            experimenting with the numbers and see which one works effectively. In this case, the number of hashing
-            brings more accuracy, but it takes more computation. And the number of bands determine how strict the group
-            criteria is.
+            The main idea is that Jaccard Similarity, MinHashing, and LSH are useful when the system needs to
+            find similar items from a large group without comparing everything one by one. For this project, the
+            “items” are students and the comparison is based on shared interests. In a workplace platform, the
+            same logic could match employees with similar skills or mentorship goals. In a marketplace, it could
+            recommend products based on shared tags or categories. In a support system, it could group similar
+            tickets based on issue labels or keywords.
         </p>
 
         <p>
-            Source:
-            <br>
-            <a href="https://giorgi.tech/blog/minhashing/" target="_blank">
-                https://giorgi.tech/blog/minhashing/
-            </a>
-            <br>
-            <a href="https://arpitbhayani.me/blogs/jaccard-minhash/" target="_blank">
-                https://arpitbhayani.me/blogs/jaccard-minhash/
-            </a>
-            <br>
-            <a href="https://www.pinecone.io/learn/series/faiss/locality-sensitive-hashing/" target="_blank">
-                https://www.pinecone.io/learn/series/faiss/locality-sensitive-hashing/
-            </a>
+            Because of that, the value of this approach is not limited to student social networking. It is a
+            lightweight way to build matching and recommendation features when the data can be represented as
+            sets. Instead of using a more expensive graph database or a heavier machine learning system, this
+            approach can still provide practical recommendations by narrowing down likely matches first and then
+            calculating similarity more directly.
+        </p>
+
+        <p>
+            Overall, this project shows how a simple interest-based matching problem can be turned into a more
+            scalable recommendation workflow. By combining MinHashing, LSH, and Jaccard Similarity, the system
+            can reduce unnecessary comparisons while still recommending users based on meaningful overlap.
         </p>
     </div>
 </body>

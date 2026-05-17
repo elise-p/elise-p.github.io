@@ -12,10 +12,13 @@
 <body>
 
     <div class="main-content">
-        <div class="about-me">
+
+        <section class="about-me">
             <img class="profile-image" src="asset/self.jpg" alt="Profile">
 
             <div class="about-content">
+                <p class="intro-label">Full-Stack Software Developer</p>
+
                 <h1 class="name">Elise Poniman</h1>
 
                 <div class="links">
@@ -33,26 +36,37 @@
                 </div>
 
                 <p class="desc">
-                    Hi, I'm Elise Poniman, a recent CS graduate from UW Seattle.
-                    I have experience in fullstack development and also exploring
-                    ERP and CRM systems such as ERPNext. Scroll down to see more
-                    of my blogs, experience and projects!
+                    Hi, I'm Elise Poniman, a recent CS graduate from UW Seattle focused on
+                    full-stack software development. I build end-to-end applications across
+                    frontend, backend, databases, and infrastructure. Scroll down to see my
+                    projects and blogs, where I explain the systems I built and the decisions
+                    behind them.
                 </p>
 
                 <a class="resume" href="asset/elise-poniman.pdf" download>
                     Download Resume
                 </a>
             </div>
-        </div>
+        </section>
 
-        <br>
-        <div class="blogs section">
-            <h2>Blogs</h2>
+        <section class="featured-section section">
+            <div class="section-header">
+                <p class="section-label">Featured Work</p>
 
-            <div class="card-list">
-                <a class="blog-item card-item" href="blog/huskyholdem.html">
+                <h2>Project Blogs</h2>
+
+                <p class="section-intro">
+                    These are the main technical writeups where I explain the systems I built,
+                    the problems I worked on, and the decisions behind the implementation.
+                </p>
+            </div>
+
+            <div class="card-list featured-grid">
+                <a class="blog-item card-item featured-card" href="blog/huskyholdem.html">
                     <div class="card-top">
                         <div>
+                            <p class="card-kicker">Backend Infrastructure</p>
+
                             <h3>Running a Scalable Poker Bot Competition Platform</h3>
                         </div>
 
@@ -64,9 +78,12 @@
                         competition.
                     </p>
                 </a>
-                <a class="blog-item card-item" href="blog/friendly.html">
+
+                <a class="blog-item card-item featured-card" href="blog/friendly.html">
                     <div class="card-top">
                         <div>
+                            <p class="card-kicker">Recommendation Algorithm</p>
+
                             <h3>Building a Recommendation Algorithm for a Student Social App</h3>
                         </div>
 
@@ -79,248 +96,316 @@
                     </p>
                 </a>
             </div>
-        </div>
+        </section>
 
-        <br>
-        <div class="education section">
-            <h2>Education</h2>
+        <section class="personal-section section">
+            <div class="section-header">
+                <p class="section-label">Personal Background</p>
 
-            <div class="card-list">
-                <div class="education-item card-item">
-                    <div class="card-top">
-                        <div>
-                            <h3>Paul G. Allen School of Computer Science & Engineering</h3>
-                            <h4>University of Washington, Seattle</h4>
+                <h2>Education, Experience, and Projects</h2>
+
+                <p class="section-intro">
+                    A more standard view of my background, including school, work experience,
+                    technical projects, and certification.
+                </p>
+            </div>
+
+            <div class="profile-grid">
+
+                <div class="education grouped-block">
+                    <h2>Education</h2>
+
+                    <div class="card-list">
+                        <div class="education-item card-item logo-card">
+                            <div class="logo-box">
+                                <img class="card-logo" src="asset/uw-logo.png" alt="University of Washington logo">
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <div>
+                                        <h3>Paul G. Allen School of Computer Science & Engineering</h3>
+                                        <h4>University of Washington, Seattle</h4>
+                                    </div>
+                                </div>
+
+                                <p class="card-date">
+                                    September 2023 – December 2025
+                                </p>
+
+                                <p class="card-desc">
+                                    Bachelor of Science in Computer Science, GPA: 3.74
+                                </p>
+                            </div>
                         </div>
                     </div>
-
-                    <p class="card-date">
-                        September 2023 – December 2025
-                    </p>
-
-                    <p class="card-desc">
-                        Bachelor of Science in Computer Science, GPA: 3.74
-                    </p>
                 </div>
+
+                <div class="experience grouped-block">
+                    <h2>Experiences</h2>
+
+                    <div class="card-list">
+                        <a class="experience-item card-item logo-card" href="https://cdreams.org" target="_blank">
+                            <div class="logo-box">
+                                <img class="card-logo" src="asset/cdf-logo.png" alt="Community Dreams Foundation logo">
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <div>
+                                        <h3>Software Engineer - CRM</h3>
+                                        <h4>Community Dreams Foundation</h4>
+                                    </div>
+
+                                    <span class="arrow">↗</span>
+                                </div>
+
+                                <p class="card-date">
+                                    March 2026 – Present
+                                </p>
+
+                                <p class="card-desc">
+                                    Implemented CRM deal pipeline for projects supporting 10+ project managers. Defined
+                                    the
+                                    stages, transitions, and validation rules to enable consistent project deal
+                                    progression.
+                                </p>
+                            </div>
+                        </a>
+
+                        <a class="experience-item card-item logo-card" href="https://huskyholdem.atcuw.org"
+                            target="_blank">
+                            <div class="logo-box">
+                                <img class="card-logo" src="asset/atc-logo.png" alt="UW Algorithmic Trading Club logo">
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <div>
+                                        <h3>Software Engineer</h3>
+                                        <h4>UW Algorithmic Trading Club - Husky Holdem</h4>
+                                    </div>
+
+                                    <span class="arrow">↗</span>
+                                </div>
+
+                                <p class="card-date">
+                                    June 2025 – August 2025
+                                </p>
+
+                                <p class="card-desc">
+                                    Contributed to UW's poker bot competition for 50+ users. Designed and implemented
+                                    API to
+                                    automate 6-player matches in a Dockerized environment, resulting in 70% reduction in
+                                    setup
+                                    time. Implemented container scaling to deal with heavy load on live game instances,
+                                    improving system uptime by 80%.
+                                </p>
+                            </div>
+                        </a>
+
+                        <a class="experience-item card-item logo-card" href="https://tanaka.co.id" target="_blank">
+                            <div class="logo-box">
+                                <img class="card-logo" src="asset/tanaka-logo.png" alt="Tanaka logo">
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <div>
+                                        <h3>Software Engineer Intern</h3>
+                                        <h4>Tanaka</h4>
+                                    </div>
+
+                                    <span class="arrow">↗</span>
+                                </div>
+
+                                <p class="card-date">
+                                    July 2023 – September 2023
+                                </p>
+
+                                <p class="card-desc">
+                                    Developed internal web pages using HTML, CSS, JavaScript, PHP, and MySQL to improve
+                                    operational workflows and product visibility for employees. Achieved 100% accuracy
+                                    in
+                                    financial reporting by debugging and fixing SQL and logic errors.
+                                </p>
+                            </div>
+                        </a>
+
+                        <a class="experience-item card-item logo-card" href="https://www.cs.washington.edu"
+                            target="_blank">
+                            <div class="logo-box">
+                                <img class="card-logo" src="asset/uw-logo.png" alt="University of Washington logo">
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <div>
+                                        <h3>Teaching Assistant</h3>
+                                        <h4>Paul G. Allen School - UW</h4>
+                                    </div>
+
+                                    <span class="arrow">↗</span>
+                                </div>
+
+                                <p class="card-date">
+                                    March 2025 – June 2025
+                                </p>
+
+                                <p class="card-desc">
+                                    Taught Flutter core programming and application behavior concepts to 30+ students
+                                    weekly.
+                                    Addressed and resolved 50+ technical issues related to application logic,
+                                    development
+                                    environments, root cause analysis, and code fixes.
+                                </p>
+                            </div>
+                        </a>
+
+                        <a class="experience-item card-item logo-card"
+                            href="https://www.edmonds.edu/student-services/learning-support-center/" target="_blank">
+                            <div class="logo-box">
+                                <img class="card-logo" src="asset/edmonds-logo.png" alt="Edmonds College logo">
+                            </div>
+
+                            <div class="card-content">
+                                <div class="card-top">
+                                    <div>
+                                        <h3>Math Tutor</h3>
+                                        <h4>Edmonds College</h4>
+                                    </div>
+
+                                    <span class="arrow">↗</span>
+                                </div>
+
+                                <p class="card-date">
+                                    March 2022 – March 2023
+                                </p>
+
+                                <p class="card-desc">
+                                    Tutored college students in algebra, calculus, and introductory mathematics with
+                                    students
+                                    of various ages and backgrounds.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="projects grouped-block">
+                    <h2>Projects</h2>
+
+                    <div class="card-list">
+                        <a class="project-item card-item"
+                            href="https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration"
+                            target="_blank">
+                            <div class="card-top">
+                                <div>
+                                    <h3>Friendly - Husky Coding Project</h3>
+                                </div>
+
+                                <span class="arrow">↗</span>
+                            </div>
+
+                            <p class="card-date">
+                                September 2024 – June 2025
+                            </p>
+
+                            <p class="card-desc">
+                                Implemented a social media app for UW students with 4+ members for Husky Coding Project
+                                Club, focusing on API design and recommendation algorithm.
+                            </p>
+                        </a>
+
+                        <a class="project-item card-item" href="https://courses.cs.washington.edu/courses/cse452/24au/"
+                            target="_blank">
+                            <div class="card-top">
+                                <div>
+                                    <h3>Distributed System Key-Value Store</h3>
+                                </div>
+
+                                <span class="arrow">↗</span>
+                            </div>
+
+                            <p class="card-date">
+                                September 2024 – December 2024
+                            </p>
+
+                            <p class="card-desc">
+                                Developed a fault-tolerant, distributed key-value store in Java, ensuring strong
+                                consistency using the Multi-Paxos consensus algorithm. Enabled multi-key transactional
+                                support by integrating the 2-Phase Commit protocol while maintaining sequential
+                                consistency across operations.
+                            </p>
+                        </a>
+
+                        <a class="project-item card-item" href="https://github.com/elise-p/crime_finder"
+                            target="_blank">
+                            <div class="card-top">
+                                <div>
+                                    <h3>Crime Finder - Mobile App</h3>
+                                </div>
+
+                                <span class="arrow">↗</span>
+                            </div>
+
+                            <p class="card-date">
+                                March 2024 – June 2024
+                            </p>
+
+                            <p class="card-desc">
+                                Collaborated with two team members to develop a mobile app using Flutter that visualizes
+                                crime data in Seattle, providing a potential improvement to UW’s existing crime alert
+                                system.
+                            </p>
+                        </a>
+
+                        <a class="project-item card-item" href="https://github.com/lkim0402/BinGenius" target="_blank">
+                            <div class="card-top">
+                                <div>
+                                    <h3>BinGenius - Third Prize Hackathon on Eduhacks</h3>
+                                </div>
+
+                                <span class="arrow">↗</span>
+                            </div>
+
+                            <p class="card-date">
+                                January 2024
+                            </p>
+
+                            <p class="card-desc">
+                                Led a 5-member team by setting clear milestones, strategically delegating tasks, and
+                                conducting frequent check-ins and realigning priorities, ensuring the project was
+                                completed
+                                within the 24-hour timeframe and ultimately securing a third prize win. Designed and
+                                developed a software simulation of an AI auto-classification trash bin to improve trash
+                                sorting.
+                            </p>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="certification grouped-block">
+                    <h2>Certification</h2>
+
+                    <div class="card-list">
+                        <div class="certification-item card-item">
+                            <div class="card-top">
+                                <div>
+                                    <h3>AWS Certified Solutions Architect - Associate</h3>
+                                </div>
+                            </div>
+
+                            <p class="card-date">
+                                March 2028
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
+        </section>
 
-        <br>
-
-        <div class="experience section">
-            <h2>Experiences</h2>
-            <div class="card-list">
-                <a class="experience-item card-item" href="https://cdreams.org" target="_blank">
-                    <div class="card-top">
-                        <div>
-                            <h3>Software Engineer - CRM</h3>
-                            <h4>Community Dreams Foundation</h4>
-                        </div>
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        March 2026 – Present
-                    </p>
-
-                    <p class="card-desc">
-                        Implemented CRM deal pipeline for projects supporting 10+ project managers. Defining the stages,
-                        transitions,
-                        and valudation rules to enable consistent project deal progression.
-                    </p>
-                </a>
-                <a class="experience-item card-item" href="https://huskyholdem.atcuw.org" target="_blank">
-                    <div class="card-top">
-                        <div>
-                            <h3>Software Engineer</h3>
-                            <h4>UW Algorithmic Trading Club - Husky Holdem</h4>
-                        </div>
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        June 2025 – August 2025
-                    </p>
-
-                    <p class="card-desc">
-                        Contributed to UW's poker bot competition for 50+ users. Designed and implemented API to
-                        automate 6-player matches in Dockerized environment, resulting in 70% reduction in setup time.
-                        Implemented container scaling to deal with heavy load on live game instances, improving system
-                        uptime by 80%.
-                    </p>
-                </a>
-                <a class="experience-item card-item" href="https://tanaka.co.id" target="_blank">
-                    <div class="card-top">
-                        <div>
-                            <h3>Software Engineer Intern</h3>
-                            <h4>Tanaka</h4>
-                        </div>
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        July 2023 – September 2023
-                    </p>
-
-                    <p class="card-desc">
-                        Developed internal web pages using HTML, CSS, JavaScript,
-                        PHP, and MySQL to improve operational workflows and product
-                        visibility for employees.
-                        Achieved 100% accuracy in financial reporting by debugging and fixing SQL and logic errors.
-                    </p>
-                </a>
-                <a class="experience-item card-item" href="https://www.cs.washington.edu" target="_blank">
-                    <div class="card-top">
-                        <div>
-                            <h3>Teaching Assistant</h3>
-                            <h4>Paul G. Allen School - UW</h4>
-                        </div>
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        March 2025 – June 2025
-                    </p>
-
-                    <p class="card-desc">
-                        Taught Flutter core programming and application behaviour concepts to 30+ students weekly.
-                        Addressed and resolved 50+ technical issues related to application logic, development
-                        environments and identifying
-                        root cause of the code error, and guiding student through fixes.
-                    </p>
-                </a>
-                <a class="experience-item card-item"
-                    href="https://www.edmonds.edu/student-services/learning-support-center/" target="_blank">
-                    <div class="card-top">
-                        <div>
-                            <h3>Math Tutor</h3>
-                            <h4>Edmonds College</h4>
-                        </div>
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        March 2022 – March 2023
-                    </p>
-
-                    <p class="card-desc">
-                        Tutored college students in algebra, calculus, and introductory mathematics with students
-                        of various age and backgrounds.
-                    </p>
-                </a>
-            </div>
-
-
-        </div>
-
-        <br>
-
-        <div class="projects section">
-            <h2>Projects</h2>
-            <div class="card-list">
-                <a class="project-item card-item"
-                    href="https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration"
-                    target="_blank">
-                    <div class="card-top">
-
-                        <h3>Friendly - Husky Coding Project</h3>
-
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        Sept 2024 - June 2025
-                    </p>
-
-                    <p class="card-desc">
-                        Implemented a social media app for UW students with 4+ members for Husky Coding Project Club,
-                        focusing on API and recommendation algorithm.
-                    </p>
-                </a>
-                <a class="project-item card-item" href="https://courses.cs.washington.edu/courses/cse452/24au/"
-                    target="_blank">
-                    <div class="card-top">
-
-                        <h3>Distributed System Key-Value Store </h3>
-
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        Sept 2024 - December 2024
-                    </p>
-
-                    <p class="card-desc">
-                        Developed a fault-tolerant, distributed key-value store in Java, ensuring strong consistency
-                        using the Multi-Paxos consensus algorithm.
-                        Enabled multi-key transactional support by integrating the 2-Phase Commit protocol while
-                        maintaining sequential consistency across operations.
-                    </p>
-                </a>
-                <a class="project-item card-item" href="https://github.com/elise-p/crime_finder" target="_blank">
-                    <div class="card-top">
-
-                        <h3>Crime Finder - Mobile App</h3>
-
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        March 2024 - June 2024
-                    </p>
-
-                    <p class="card-desc">
-                        Collaborated with two team members to develop a mobile app using Flutter that visualizes crime
-                        data in Seattle, providing a potential improvement to UW’s existing crime alert system.
-                    </p>
-                </a>
-                <a class="project-item card-item" href="https://github.com/lkim0402/BinGenius" target="_blank">
-                    <div class="card-top">
-
-                        <h3>BinGenius - Third prize Hackathon on Eduhacks</h3>
-
-
-                        <span class="arrow">↗</span>
-                    </div>
-
-                    <p class="card-date">
-                        Jan 2024 - Jan 2024
-                    </p>
-
-                    <p class="card-desc">
-                        Led a 5-member team by setting clear milestones, strategically delegating tasks, and conducting
-                        frequent check-ins and realigning priorities, ensuring that the project was completed within the
-                        24-hour timeframe, ultimately securing a third prize win.
-                        Designed and developed a software simulation of an AI auto-classification trash bin to improve
-                        trash sorting.
-                    </p>
-                </a>
-            </div>
-        </div>
-        <div class="certification section">
-            <h2>Certification</h2>
-            <div class="card-list">
-                <a class="project-item card-item" href="#" onclick="return false;" target="_blank">
-                    <div class="project-top">
-                        <div>
-                            <h3>AWS Solution Architect Associate</h3>
-                        </div>
-                    </div>
-
-                    <p class="project-date">
-                        March 2028
-                    </p>
-                </a>
-            </div>
-        </div>
     </div>
 
 </body>
