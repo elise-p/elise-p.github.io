@@ -11,9 +11,21 @@
 
 <body>
 
+    <header class="site-header">
+        <nav class="site-nav">
+            <a class="site-name" href="#">Elise Poniman</a>
+
+            <div class="nav-links">
+                <a href="#work">Work</a>
+                <a href="#background">Background</a>
+                <a href="#resume">Resume</a>
+            </div>
+        </nav>
+    </header>
+
     <div class="main-content">
 
-        <section class="about-me">
+        <section class="about-me reveal">
             <img class="profile-image" src="asset/self.jpg" alt="Profile">
 
             <div class="about-content">
@@ -26,22 +38,27 @@
                         elise.poniman@gmail.com
                     </a>
 
-                    <a href="https://linkedin.com/in/elise-poniman" target="_blank">
+                    <a href="https://linkedin.com/in/elise-poniman" target="_blank" rel="noopener noreferrer">
                         LinkedIn
                     </a>
 
-                    <a href="https://github.com/elise-p" target="_blank">
+                    <a href="https://github.com/elise-p" target="_blank" rel="noopener noreferrer">
                         GitHub
                     </a>
                 </div>
 
                 <p class="desc">
-                    Hi, I'm Elise Poniman, a recent CS graduate from UW Seattle focused on full-stack software development. I build end-to-end applications across frontend, backend, databases, and infrastructure. This site contains my projects and blogs, where I break down the systems, the technical decisions behind them, and what I learned along the way. Feel free to reach out regarding opportunities, collaborations, or just to connect about software engineering and technology!
+                    Hi, I'm Elise Poniman, a recent CS graduate from UW Seattle focused on full-stack software
+                    development. I build end-to-end applications across frontend, backend, databases, and
+                    infrastructure. This site contains my projects and blogs, where I break down the systems,
+                    the technical decisions behind them, and what I learned along the way. Feel free to reach out
+                    regarding opportunities, collaborations, or just to connect about software engineering and
+                    technology!
                 </p>
             </div>
         </section>
 
-        <section class="featured-section section">
+        <section class="featured-section section reveal" id="work">
             <div class="section-header">
                 <p class="section-label">Featured Work</p>
 
@@ -90,7 +107,7 @@
             </div>
         </section>
 
-        <section class="personal-section section">
+        <section class="personal-section section reveal" id="background">
             <div class="section-header">
                 <p class="section-label">Personal Background</p>
 
@@ -116,7 +133,7 @@
                             <div class="card-content">
                                 <div class="card-top">
                                     <div>
-                                        <h3>Paul G. Allen School of Computer Science & Engineering</h3>
+                                        <h3>Paul G. Allen School of Computer Science &amp; Engineering</h3>
                                         <h4>University of Washington, Seattle</h4>
                                     </div>
                                 </div>
@@ -138,7 +155,8 @@
 
                     <div class="card-list">
 
-                        <a class="experience-item card-item logo-card" href="https://cdreams.org" target="_blank">
+                        <a class="experience-item card-item logo-card" href="https://cdreams.org" target="_blank"
+                            rel="noopener noreferrer">
                             <div class="logo-box">
                                 <img class="card-logo" src="asset/cdf-logo.png" alt="Community Dreams Foundation logo">
                             </div>
@@ -171,9 +189,10 @@
                         </a>
 
                         <a class="experience-item card-item logo-card" href="https://huskyholdem.atcuw.org"
-                            target="_blank">
+                            target="_blank" rel="noopener noreferrer">
                             <div class="logo-box">
-                                <img class="card-logo" src="asset/atc-logo.png" alt="UW Algorithmic Trading Club logo">
+                                <img class="card-logo" src="asset/atc-logo.png"
+                                    alt="UW Algorithmic Trading Club logo">
                             </div>
 
                             <div class="card-content">
@@ -204,7 +223,8 @@
                             </div>
                         </a>
 
-                        <a class="experience-item card-item logo-card" href="https://tanaka.co.id" target="_blank">
+                        <a class="experience-item card-item logo-card" href="https://tanaka.co.id" target="_blank"
+                            rel="noopener noreferrer">
                             <div class="logo-box">
                                 <img class="card-logo" src="asset/tanaka-logo.png" alt="Tanaka logo">
                             </div>
@@ -243,7 +263,7 @@
                         </a>
 
                         <a class="experience-item card-item logo-card" href="https://www.cs.washington.edu"
-                            target="_blank">
+                            target="_blank" rel="noopener noreferrer">
                             <div class="logo-box">
                                 <img class="card-logo" src="asset/uw-logo.png" alt="University of Washington logo">
                             </div>
@@ -271,7 +291,8 @@
                         </a>
 
                         <a class="experience-item card-item logo-card"
-                            href="https://www.edmonds.edu/student-services/learning-support-center/" target="_blank">
+                            href="https://www.edmonds.edu/student-services/learning-support-center/" target="_blank"
+                            rel="noopener noreferrer">
                             <div class="logo-box">
                                 <img class="card-logo" src="asset/edmonds-logo.png" alt="Edmonds College logo">
                             </div>
@@ -306,7 +327,7 @@
                     <div class="card-list">
                         <a class="project-item card-item"
                             href="https://github.com/jeremykamber/friend-ly/tree/people_view_backend_integration"
-                            target="_blank">
+                            target="_blank" rel="noopener noreferrer">
                             <div class="card-top">
                                 <div>
                                     <h3>Friendly - Husky Coding Project</h3>
@@ -332,8 +353,9 @@
                             </p>
                         </a>
 
-                        <a class="project-item card-item" href="https://courses.cs.washington.edu/courses/cse452/24au/"
-                            target="_blank">
+                        <a class="project-item card-item"
+                            href="https://courses.cs.washington.edu/courses/cse452/24au/"
+                            target="_blank" rel="noopener noreferrer">
                             <div class="card-top">
                                 <div>
                                     <h3>Distributed System Key-Value Store</h3>
@@ -353,7 +375,7 @@
                         </a>
 
                         <a class="project-item card-item" href="https://github.com/elise-p/crime_finder"
-                            target="_blank">
+                            target="_blank" rel="noopener noreferrer">
                             <div class="card-top">
                                 <div>
                                     <h3>Crime Finder - Mobile App</h3>
@@ -367,12 +389,13 @@
                             </p>
 
                             <p class="card-desc">
-                                Collaborated with two team members to build a Flutter mobile app that visualizes Seattle
-                                crime data and explores a more accessible way to view local safety information.
+                                Collaborated with two team members to build a Flutter mobile app that visualizes
+                                Seattle crime data and explores a more accessible way to view local safety information.
                             </p>
                         </a>
 
-                        <a class="project-item card-item" href="https://github.com/lkim0402/BinGenius" target="_blank">
+                        <a class="project-item card-item" href="https://github.com/lkim0402/BinGenius"
+                            target="_blank" rel="noopener noreferrer">
                             <div class="card-top">
                                 <div>
                                     <h3>BinGenius - Third Prize Hackathon on Eduhacks</h3>
@@ -415,7 +438,7 @@
             </div>
         </section>
 
-        <section class="resume-section section">
+        <section class="resume-section section reveal" id="resume">
             <div class="section-header">
                 <p class="section-label">Resume</p>
 
@@ -431,7 +454,7 @@
             </div>
 
             <div class="resume-actions">
-                <a class="resume-link" href="asset/elise-poniman.pdf" target="_blank">
+                <a class="resume-link" href="asset/elise-poniman.pdf" target="_blank" rel="noopener noreferrer">
                     Open Resume
                 </a>
 
@@ -442,6 +465,29 @@
         </section>
 
     </div>
+
+    <script>
+        const revealElements = document.querySelectorAll(".reveal");
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            {
+                threshold: 0.12,
+                rootMargin: "0px 0px -40px 0px"
+            }
+        );
+
+        revealElements.forEach((element) => {
+            observer.observe(element);
+        });
+    </script>
 
 </body>
 
